@@ -44,12 +44,12 @@ self.svList = [(x[i] + x[i - 1]) / 2 for i in range(1, len(x))]  # split value o
 ```
 
 ### 误差率计算
-误差率的计算公式如下
-![error rate](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/error%20rate.svg)
-*其中 
-m = 1,2,..,M 表示第 m 轮迭代
-i 表示第 i 个样本
-W 是样本权重
+误差率的计算公式如下 <br/>
+![error rate](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/error%20rate.svg) <br/>
+*其中 <br/>
+m = 1,2,..,M 表示第 m 轮迭代 <br/>
+i 表示第 i 个样本 <br/>
+W 是样本权重 <br/>
 I 表示函数取值为1或0，当括号中的表达式为真时，I 结果为1，反之为0* <br/>
 
 如下表所示，根据误差率计算公式可以获取每个可能的切分点产生的弱学习器的误差率，并选择误差率最小的切分点作为最优弱学习器。在第一轮迭代中，当切分点为 1.5 时的误差率最小，**e = 0.167**
@@ -93,10 +93,10 @@ def getErrorRate(self):
 ```
 
 ### 弱学习器权重计算
-弱学习器权重计算公式如下
-![individual learner weight](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/individual%20learner%20weight.svg)
-*其中 m = 1,2,..,M 表示第 m 轮迭代
-可见当弱学习器误差率越小其权重越高，当弱学习器误差率越大其权重越小
+弱学习器权重计算公式如下 <br/>
+![individual learner weight](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/individual%20learner%20weight.svg) <br/>
+*其中 m = 1,2,..,M 表示第 m 轮迭代 <br/>
+可见当弱学习器误差率越小其权重越高，当弱学习器误差率越大其权重越小 <br/>
 这样可以使分类精度高的弱学习器起到更大的作用，并削弱精度低的弱学习器的作用。* <br/>
 
 经计算，在第一轮迭代中弱学习器的权重 **a = 0.5 * ln((1 – 0.167) / 0.167) = 0.8047** <br/>
@@ -110,16 +110,16 @@ def getAlpha(self, errorRate):
 ```
 
 ### 样本权重更新
-样本权重更新公式如下
-![update sample weight](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/update%20sample%20weight.svg)
-*Z 为规范化因子，其计算公式如下*
-![update sample weight - normalisation](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/update%20sample%20weight%20-%20normalisation.svg)
-*其中
-W 表示样本权重
-m = 1,2,..,M 表示第 m 轮迭代
-i 表示第 i 个样本
-am 表示第m轮迭代的弱学习器的权重
-当样本被正确分类，exp内为负值，新样本权重变小，反之exp内为正值，新样本权重变大
+样本权重更新公式如下 <br/>
+![update sample weight](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/update%20sample%20weight.svg) <br/>
+*Z 为规范化因子，其计算公式如下* <br/>
+![update sample weight - normalisation](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/update%20sample%20weight%20-%20normalisation.svg) <br/>
+*其中 <br/>
+W 表示样本权重 <br/>
+m = 1,2,..,M 表示第 m 轮迭代 <br/>
+i 表示第 i 个样本 <br/>
+am 表示第m轮迭代的弱学习器的权重 <br/>
+当样本被正确分类，exp内为负值，新样本权重变小，反之exp内为正值，新样本权重变大 <br/>
 可见当错误分类时，新的样本权重会变大，会在下一轮迭代中得到重视* <br/>
 
 根据上述公式可得到在第一轮迭代中每个样本更新之后的样本权重 **(0.1, 0.1, 0.1, 0.1, 0.5, 0.1)**
@@ -151,13 +151,13 @@ def updateWeights(self, alpha, prediction):
 ```
 
 ### 强学习器误差率
-每一轮迭代完成后可以计算强学习器的预测计算其误差率，强学习器的公式如下
-![strong learner](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/strong-learner.svg)
-*其中
-G(x) 表示强学习器
-sign 表示一个非线性函数，当输入值大于 0 时 sign(input) 为 1，当输入值小于 0 时 sign(intput) 为 -1
-m 表示第 m 轮迭代
-a 表示弱学习器权重
+每一轮迭代完成后可以计算强学习器的预测计算其误差率，强学习器的公式如下 <br/>
+![strong learner](https://raw.githubusercontent.com/blackdogtop/image-host/master/Machine-Learning/Ensemble-Learning/Adaboost/strong-learner.svg) <br/>
+*其中 <br/>
+G(x) 表示强学习器 <br/>
+sign 表示一个非线性函数，当输入值大于 0 时 sign(input) 为 1，当输入值小于 0 时 sign(intput) 为 -1 <br/>
+m 表示第 m 轮迭代 <br/>
+a 表示弱学习器权重 <br/>
 h 表示弱学习器* <br/>
 
 故当第一轮迭代结束，此时的强学习器为 
@@ -201,170 +201,11 @@ strong learner prediction: [1, 1, -1, -1, 1, -1]
 ```
 
 ### 完整代码
-```
-class AdaboostClassification:
-    """a simple adaboost implementation (one-dimensional sample)"""
-    def __init__(self, x=None, y=None):
-        # init samples and labels
-        if not x and not y:
-            x = [0, 1, 2, 3, 4, 5]
-            y = [1, 1, -1, -1, 1, -1]
-        self.x = x
-        self.y = y
-        self.svList = [(x[i] + x[i - 1]) / 2 for i in range(1, len(x))]  # split value of samples
-
-        self.weights = [1/len(x)] * len(x)  # init sample weights
-        self.errThreshold = 0.1  # error threshold
-        self.maxIterNum = 5  # max iteration
-
-        self.hxList = []  # store prediction for each individual learner
-        self.alphaList = []  # store weight (alpha) for each individual learner
-
-    def getErrorRate(self):
-        """
-        calculate optimised individual learner according to split values
-        :returns
-            minErrorRate: the min error rate from different split values
-            bestPrediction: a list stores predict result
-        """
-        def getSingleErrorRate(splitValue):
-            """
-            get min single split value error rate from two different situations
-            two situations:
-                1 when x > split value              -1 when x > split value
-                -1 when x < split value     OR      1 when x < split
-                error rate -- e                      error rate -- (1-e)
-            :params splitValue: the single split value from cvList
-            :returns
-                min(ErrorRate): min error rate in two different situations
-                prediction: a list stores predict result
-            """
-            errorRate = 0
-            prediction = []  # store predict result
-            for i, label in enumerate(self.y):
-                predict = 1 if self.x[i] < splitValue else -1
-                prediction.append(predict)
-                if predict * label > 0:  # correct predict
-                    errorRate += 0 * self.weights[i]
-                else:  # wrong predict
-                    errorRate += 1 * self.weights[i]
-            if 1-errorRate < errorRate:
-                errorRate = 1-errorRate
-                prediction = [-1 * p for p in prediction]  # convert to additive inverse when min is the other situation
-            return errorRate, prediction
-
-        minErrorRate, bestPrediction = getSingleErrorRate(self.svList[0])  # initialise
-        for i in range(1, len(self.svList)):
-            errorRate, prediction = getSingleErrorRate(self.svList[i])
-            if errorRate < minErrorRate:
-                minErrorRate = errorRate
-                bestPrediction = prediction
-        self.hxList.append(bestPrediction)
-        return minErrorRate
-
-    def getAlpha(self, errorRate):
-        """
-        calculate individual learner weight(alpha), which is only related to error rate
-        formula: 1/2 * log((1-errorRate) / errorRate)
-        :params errorRate: error rate
-        :return alpha: the individual learner weight
-        """
-        alpha = 1/2 * math.log((1-errorRate) / errorRate)
-        self.alphaList.append(alpha)
-        return alpha
-
-    def updateWeights(self, alpha, prediction):
-        """
-        calculate and update sample weights
-        flag (1 or -1) is used in the code to replace the result (yi * Gm(xi))
-        formula:
-            W(m+1, i) = W(m, i) / Z * exp(-alpha * yi * Gm(xi))
-            Z = sum(exp(-alpha * yi * Gm(xi)))
-            p.s. if individual learner Gm correct predict the sample xi, then the (-alpha * yi * Gm(xi)) is positive
-                 vice versa
-        :params
-            alpha: current individual learner weight
-            prediction: individual learner predict result
-        """
-        nextWeights = []  # new sample weights
-        sumWeight = 0
-        # get current total sample weights
-        for i, weight in enumerate(self.weights):
-            flag = 1 if prediction[i] == self.y[i] else -1  # (yi * Gm(xi)) is 1 if predict is correct else 0
-            sumWeight = sumWeight + (self.weights[i] * math.exp(-1 * alpha * flag))
-        # get new sample weights
-        for i, weight in enumerate(self.weights):
-            flag = 1 if prediction[i] == self.y[i] else -1
-            nextWeight = self.weights[i] * math.exp(-1 * alpha * flag) / sumWeight
-            nextWeights.append(nextWeight)
-        self.weights = nextWeights  # update weights
-
-    def sign(self, input):
-        """
-        sign function, which can convert input to 1 or -1
-        :params input: input value
-        :return output: 1 or -1
-        """
-        return 1 if input > 0 else -1
-
-    def strongLearner(self):
-        """
-        get strong learner prediction
-        formula:
-            G(x) = sign(sum(a * h(x))
-        :return gx: a list of strong learner prediction
-        """
-        # get error rate
-        errorRate = self.getErrorRate()
-        # get individual weight coefficient
-        alpha = self.getAlpha(errorRate)
-        # update data sample weights
-        self.updateWeights(alpha, self.hxList[-1])  # hxList[-1] is the prediction of current individual learner
-
-        # get strong learner output
-        gx = np.array([0] * len(self.y))  # initialise
-        for i, hx in enumerate(self.hxList):  # get prediction for each individual learner
-            gx = gx + self.alphaList[i] * np.array(hx)
-        gx = [self.sign(t) for t in gx]
-
-        print('误差率: {}\n'
-              '弱学习器权重: {}\n'
-              '样本权重: {}'
-              .format(errorRate, alpha, self.weights))
-
-        return gx
-
-    def trainAdaboost(self):
-        """
-        train adaboost and stop when the strong error rate less than error threshold or reach max iteration number
-        :return gx: the output of strong learner
-        """
-        for iteration in range(self.maxIterNum):
-            print('In the {} iteration:'.format(iteration + 1))
-            errNum = 0
-            gx = self.strongLearner()
-            # calculate error rate
-            for i in range(len(gx)):
-                if gx[i] != self.y[i]:
-                    errNum += 1
-            errorRate = errNum / len(gx)
-
-            print('强学习器错误率: {}\n'.format(errorRate))
-
-            if errorRate < self.errThreshold:
-                break
-        return gx
-
-
-if __name__ == '__main__':
-    adaboost = AdaboostClassification()
-    gx = adaboost.trainAdaboost()
-    print('strong learner prediction: {}'.format(gx))
-```
+见[adaboost.py](https://github.com/blackdogtop/Machine-Learning/blob/main/Ensemble-Learning/Adaboost/adaboost.py)
 
 ## 参考及相关阅读
-李航 - 统计学习方法
-周志华 - 机器学习
-[集成学习之Adaboost算法原理小结](https://www.cnblogs.com/pinard/p/6133937.html)
-[手把手教你实现一个 AdaBoost](https://developer.ibm.com/zh/technologies/analytics/articles/machine-learning-hands-on6-adaboost/)
-[AdaBoost](https://en.wikipedia.org/wiki/AdaBoost)
+李航 - 统计学习方法 <br/>
+周志华 - 机器学习 <br/>
+[集成学习之Adaboost算法原理小结](https://www.cnblogs.com/pinard/p/6133937.html) <br/>
+[手把手教你实现一个 AdaBoost](https://developer.ibm.com/zh/technologies/analytics/articles/machine-learning-hands-on6-adaboost/) <br/>
+[AdaBoost](https://en.wikipedia.org/wiki/AdaBoost) <br/>
