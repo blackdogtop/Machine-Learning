@@ -8,7 +8,7 @@ data sample can infer: https://developer.ibm.com/zh/technologies/analytics/artic
 """
 
 
-class Adaboost:
+class AdaboostClassification:
     """a simple adaboost implementation (one-dimensional sample)"""
     def __init__(self, x=None, y=None):
         # init samples and labels
@@ -163,6 +163,6 @@ class Adaboost:
 
 
 if __name__ == '__main__':
-    adaboost = Adaboost()
+    adaboost = AdaboostClassification()
     gx = adaboost.trainAdaboost()
     print('strong learner prediction: {}'.format(gx))
