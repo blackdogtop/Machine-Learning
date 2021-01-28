@@ -1,2 +1,2 @@
 # Reinforcement Learning
-The repository is the exercise of the book [Reinforcement Learning: An Introduction](https://www.amazon.co.jp/exec/obidos/ASIN/0262039249/hatena-blog-22/)
+The repository is the exercise of the book [Reinforcement Learning: An Introduction](https://www.amazon.com/Reinforcement-Learning-Introduction-Adaptive-Computation/dp/0262039249)
