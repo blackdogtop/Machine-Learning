@@ -21,11 +21,6 @@ class Bandit:
         self.Q = np.zeros(arms)  # estimated reward
         self.N = [0 for _ in range(arms)]  # steps
 
-    def reset(self):
-        self.q = np.zeros(self.arms)
-        self.Q = np.zeros(self.arms)
-        self.N = [0 for _ in range(self.arms)]
-
     def execute(self):
         QinStep = np.zeros(shape=self.timeStep)
         optimalAction = np.zeros(shape=self.timeStep)
